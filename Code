@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    double A[20][20], X[20];     // матриця A та вектор X
+
+    printf("Введіть n (<=20): ");
+    scanf("%d", &n);
+
+    printf("Введіть матрицю A(%d x %d):\n", n, n);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%lf", &A[i][j]);
+
+// обчислюю вектор X
+
+    for (int i = 0; i < n; i++) {
+        int first = -1, last = -1;
+
+// шукаю від’ємні елементи в рядку
+
+        for (int j = 0; j < n; j++)
+            if (A[i][j] < 0) {
+                if (first == -1)
+                    first = j;
+                last = j;
+            }
+
+// якщо немає або тільки один від’ємний => X(i) = -1
+
+        if (first == -1 || first == last)
+            X[i] = -1;
+        else {
+            double s = 0;
+            for (int j = first; j <= last; j++)
+                s += fabs(A[i][j]);
+            X[i] = s;
+        }
+    }
+
+    printf("Вектор X:\n");
+    for (int i = 0; i < n; i++)
+        printf("%.2lf ", X[i]);
+
+    return 0;
+}
